@@ -77,6 +77,10 @@ Post.init(
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
