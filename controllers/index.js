@@ -1,16 +1,12 @@
-const router = require('express').Router(); 
+const router = require('express').Router();
 
-const apiRoutes = require('./api/');
+//const apiRoutes = require('./api/');
 const homeRoutes = require('./home-routes.js');
-// need to create this: 
-const withAuth = require('../utils/auth'); 
+// const dashboardRoutes = require('./dashboard-routes.js');
+const withAuth = require('../utils/auth');
 
+router.use('/', homeRoutes);
+// router.use('/api', apiRoutes);
+// router.use('/dashboard', dashboardRoutes);
 
-
-
-
-
-
-
-
-module.exports = router; 
+module.exports = router;

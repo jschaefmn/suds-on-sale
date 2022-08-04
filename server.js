@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 // express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(require('./controllers/'));
 // connect to database
 sequelize.sync({ force: false }).then(() => {
   console.log(`Now connected to database...`);
