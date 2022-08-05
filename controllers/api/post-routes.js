@@ -4,13 +4,17 @@ const { User, Post, Comment, Category, Tag, Upvote, Downvote } = require('../../
 const withAuth = require('../../utils/auth');
 
 
-router.post('/new', withAuth, (req, res) => {
-  // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+router.post('/new', (req, res) => {
+  // expects {title: , post_url: , user_id: 1}
+  console.log(req.body);
   Post.create({
     title: req.body.title,
     post_url: req.body.post_url,
     post_body: req.body.post_body,
-    user_id: req.session.user_id
+    user_id: req.body.user_id, 
+    price: req.body.price, 
+    category_id: req.body.category_id, 
+    tag_id: req.body.tag_id
   })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
