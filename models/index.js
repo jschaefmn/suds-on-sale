@@ -4,7 +4,6 @@ const Comment = require("./Comment");
 const Category = require("./Category");
 const Tag = require("./Tag");
 const Upvote = require("./Upvote");
-const Downvote = require("./Downvote");
 
 // ceate assosciations
 // User Post Relation
@@ -62,35 +61,6 @@ Post.hasMany(Upvote, {
   foreignKey: "post_id",
 });
 
-// Downvote User Post Relation
-User.belongsToMany(Post, {
-  through: Downvote,
-  as: "downvoted_posts",
-  foreignKey: "user_id",
-});
-
-Post.belongsToMany(User, {
-  through: Downvote,
-  as: "downvoted_posts",
-  foreignKey: "post_id",
-});
-
-Downvote.belongsTo(User, {
-  foreignKey: "user_id",
-});
-
-Downvote.belongsTo(Post, {
-  foreignKey: "post_id",
-});
-
-User.hasMany(Downvote, {
-  foreignKey: "user_id",
-});
-
-Post.hasMany(Downvote, {
-  foreignKey: "post_id",
-});
-
 // Post Category Relation
 Post.belongsTo(Category, {
     foreignKey: "category_id",
@@ -109,4 +79,4 @@ Tag.hasMany(Post, {
     foreignKey: "tag_id"
 });
 
-module.exports = { User, Post, Comment, Category, Tag, Upvote, Downvote };
+module.exports = { User, Post, Comment, Category, Tag, Upvote };
