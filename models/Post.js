@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
+
 // create our Post model
 class Post extends Model {
   static upvote(body, models) {
@@ -21,31 +22,6 @@ class Post extends Model {
               "(SELECT COUNT(*) FROM upvote WHERE post.id = upvote.post_id)"
             ),
             "upvote_count",
-          ],
-        ],
-      });
-    });
-  }
-
-  static downvote(body, models) {
-    return models.Downvote.create({
-      user_id: body.user_id,
-      post_id: body.post_id,
-    }).then(() => {
-      return Post.findOne({
-        where: {
-          id: body.post_id,
-        },
-        attributes: [
-          "id",
-          "post_url",
-          "title",
-          "created_at",
-          [
-            sequelize.literal(
-              "(SELECT COUNT(*) FROM upvote WHERE post.id = downvote.post_id)"
-            ),
-            "downvote_count",
           ],
         ],
       });
@@ -74,8 +50,8 @@ Post.init(
       },
     },
     post_body: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
