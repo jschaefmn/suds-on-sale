@@ -28,6 +28,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session(sess));
 app.use(require('./controllers/'));
 
+app.get('/', (req, res) => {
+  res.render('single-post')
+})
+
 
 // connect to database
 sequelize.sync({ force: false }).then(() => {
