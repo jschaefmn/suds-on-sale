@@ -19,13 +19,18 @@ router.get("/beer", (req, res) => {
     where: {
       category_id: 1,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
+    attributes: [
+      "title",
+      "price",
+      "post_body",
+      "created_at",
+      "post_url",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
+        ),
+        "upvote_count",
+      ],
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -43,13 +48,18 @@ router.get("/wine", (req, res) => {
     where: {
       category_id: 2,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
+    attributes: [
+      "title",
+      "price",
+      "post_body",
+      "created_at",
+      "post_url",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
+        ),
+        "upvote_count",
+      ],
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -67,13 +77,18 @@ router.get("/spirits", (req, res) => {
     where: {
       category_id: 3,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
+    attributes: [
+      "title",
+      "price",
+      "post_body",
+      "created_at",
+      "post_url",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
+        ),
+        "upvote_count",
+      ],
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
