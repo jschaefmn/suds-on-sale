@@ -10,6 +10,7 @@ const {
   Downvote,
 } = require("../models");
 const withAuth = require("../utils/auth");
+const imagePreview = require("../utils/imagePreview");
 
 // Beer Category Route
 router.get("/beer", (req, res) => {
