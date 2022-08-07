@@ -4,10 +4,6 @@ const {
   User,
   Post,
   Comment,
-  Category,
-  Tag,
-  Upvote,
-  Downvote,
 } = require("../models");
 const withAuth = require("../utils/auth");
 const imagePreview = require("../utils/imagePreview");
