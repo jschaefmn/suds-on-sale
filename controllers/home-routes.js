@@ -37,7 +37,8 @@ router.get("/beer", (req, res) => {
         );
       }
 
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('beer', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -74,7 +75,8 @@ router.get("/wine", (req, res) => {
         );
       }
 
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('wine', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -110,9 +112,10 @@ router.get("/spirits", (req, res) => {
           dbPostData[index].post_url
         );
       }
-
+      
       const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('beer', { posts });
+      res.render('spirits', { posts });
+
     })
     .catch((err) => {
       console.log(err);
