@@ -4,7 +4,7 @@ const express = require("express");
 const session = require('express-session');
 const sequelize = require("./config/connection");
 const exphbs = require('express-handlebars');
-// const helpers = require('./utils/helpers');
+const helpers = require('./utils/helpers');
 const hbs = exphbs.create({});
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // initializing server
@@ -26,16 +26,15 @@ const sess = {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sess));
-app.use(require('./controllers/'));
 
 
-app.set('view engine', 'handlebars');
 app.engine('handlebars', hbs.engine);
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => {
-  res.render();
-});
+app.set('view engine', 'handlebars');
+// app.get('/', (req, res) => {
+//   res.render('home');
+// });
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to database
 sequelize.sync({ force: false }).then(() => {

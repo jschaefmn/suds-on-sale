@@ -110,8 +110,8 @@ router.get("/spirits", (req, res) => {
           dbPostData[index].post_url
         );
       }
-
-      res.json(dbPostData);
+      res.render('test');
+      // res.json(dbPostData);
     })
     .catch((err) => {
       console.log(err);
