@@ -1,1 +1,45 @@
-<p>hello world</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SudsOnSale</title>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <link rel="stylesheet" href="">
+
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <h1>
+                {{!-- home button --}}
+                <a href="/">Home</a>
+            </h1>
+            <nav>
+                {{!-- navigation list --}}
+                <a href="/beer">Beer</a>
+                <a href="/wine">Wine</a>
+                <a href="/spirits">Spirits</a>
+                {{#if loggedOut}}
+                <a href="/login">Login</a>
+                {{else}}
+                <button id="logout" class="btn-no-style logout">Log Out</button>
+                {{/if}}
+                
+            </nav>
+        </header>
+        <div class="site">
+            <div class="site-name">
+               <h1> Suds On Sale</h1>
+            </div>
+        </div>
+      <main>
+          {{{ body }}}
+      </main>
+    </div>
+    {{#if loggedIn}}
+    <script src="/public/javascript/logout.js"></script>
+    {{/if}}
+</body>
+</html>
