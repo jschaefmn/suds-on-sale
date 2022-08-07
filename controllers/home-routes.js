@@ -110,8 +110,9 @@ router.get("/spirits", (req, res) => {
           dbPostData[index].post_url
         );
       }
-      res.render('test');
-      // res.json(dbPostData);
+
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('beer', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -156,8 +157,8 @@ router.get("/", (req, res) => {
           dbPostData[index].post_url
         );
       }
-
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('homepage', { posts });
     })
     .catch((err) => {
       console.log(err);
