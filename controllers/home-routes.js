@@ -4,12 +4,9 @@ const {
   User,
   Post,
   Comment,
-  Category,
-  Tag,
-  Upvote,
-  Downvote,
 } = require("../models");
 const withAuth = require("../utils/auth");
+const imagePreview = require("../utils/imagePreview");
 
 // Beer Category Route
 router.get("/beer", (req, res) => {
@@ -33,7 +30,15 @@ router.get("/beer", (req, res) => {
       ],
     ],
   })
-    .then((dbPostData) => res.json(dbPostData))
+    .then(async (dbPostData) => {
+      for (let index = 0; index < dbPostData.length; index++) {
+        dbPostData[index].image_url = await imagePreview(
+          dbPostData[index].post_url
+        );
+      }
+
+      res.json(dbPostData);
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -62,7 +67,15 @@ router.get("/wine", (req, res) => {
       ],
     ],
   })
-    .then((dbPostData) => res.json(dbPostData))
+    .then(async (dbPostData) => {
+      for (let index = 0; index < dbPostData.length; index++) {
+        dbPostData[index].image_url = await imagePreview(
+          dbPostData[index].post_url
+        );
+      }
+
+      res.json(dbPostData);
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -91,7 +104,15 @@ router.get("/spirits", (req, res) => {
       ],
     ],
   })
-    .then((dbPostData) => res.json(dbPostData))
+    .then(async (dbPostData) => {
+      for (let index = 0; index < dbPostData.length; index++) {
+        dbPostData[index].image_url = await imagePreview(
+          dbPostData[index].post_url
+        );
+      }
+
+      res.json(dbPostData);
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -125,7 +146,19 @@ router.get("/", (req, res) => {
       ],
     ],
   })
-    .then((dbPostData) => res.json(dbPostData))
+    .then(async (dbPostData) => {
+      if (dbPostData.length > 10) {
+        dbPostData.length = 10;
+      }
+
+      for (let index = 0; index < dbPostData.length; index++) {
+        dbPostData[index].image_url = await imagePreview(
+          dbPostData[index].post_url
+        );
+      }
+
+      res.json(dbPostData);
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
