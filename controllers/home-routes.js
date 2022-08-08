@@ -25,13 +25,7 @@ router.get("/beer", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-
+    .then((dbPostData) => {
       const posts = dbPostData.map(post => post.get({ plain: true }));
       res.render('beer', { posts });
     })
@@ -65,7 +59,8 @@ router.get("/wine", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('wine', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -97,7 +92,8 @@ router.get("/spirits", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('spirits', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -137,7 +133,8 @@ router.get("/", (req, res) => {
       if (dbPostData.length > 10) {
         dbPostData.length = 10;
       }
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('homepage', { posts });
     })
     .catch((err) => {
       console.log(err);
