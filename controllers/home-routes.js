@@ -1,10 +1,6 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const {
-  User,
-  Post,
-  Comment,
-} = require("../models");
+const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
 // Beer Category Route
@@ -67,7 +63,6 @@ router.get("/wine", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-
       res.json(dbPostData);
     })
     .catch((err) => {
@@ -118,6 +113,7 @@ router.get("/", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url"
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -153,7 +149,7 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
+    attributes: ["title", "price", "post_body", "created_at", "post_url", "image_url"],
     include: [
       {
         model: Comment,
