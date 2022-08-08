@@ -1,12 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const {
-  User,
-  Post,
-  Comment,
-} = require("../models");
+const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
-const imagePreview = require("../utils/imagePreview");
 
 // Beer Category Route
 router.get("/beer", (req, res) => {
@@ -60,6 +55,7 @@ router.get("/wine", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -68,15 +64,8 @@ router.get("/wine", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('wine', { posts });
+    .then((dbPostData) => {
+      res.json(dbPostData);
     })
     .catch((err) => {
       console.log(err);
@@ -98,6 +87,7 @@ router.get("/spirits", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -106,16 +96,8 @@ router.get("/spirits", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-      
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('spirits', { posts });
-
+    .then((dbPostData) => {
+      res.json(dbPostData);
     })
     .catch((err) => {
       console.log(err);
@@ -134,6 +116,7 @@ router.get("/", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -150,18 +133,11 @@ router.get("/", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
+    .then((dbPostData) => {
       if (dbPostData.length > 10) {
         dbPostData.length = 10;
       }
-
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('homepage', { posts });
+      res.json(dbPostData);
     })
     .catch((err) => {
       console.log(err);
@@ -175,7 +151,7 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
+    attributes: ["title", "price", "post_body", "created_at", "post_url", "image_url"],
     include: [
       {
         model: Comment,
@@ -200,8 +176,16 @@ router.get("/login", (req, res) => {
     res.redirect("/");
     return;
   }
-
   res.render("login");
 });
+
+router.get("/create", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+  res.render("create");
+});
+
 
 module.exports = router;
