@@ -54,7 +54,7 @@ router.get("/wine", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
-      "image_url"
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -86,7 +86,7 @@ router.get("/spirits", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
-      "image_url"
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -115,7 +115,7 @@ router.get("/", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
-      "image_url"
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
