@@ -7,7 +7,6 @@ const {
   Upvote,
 } = require("../../models");
 const withAuth = require("../../utils/auth");
-const imagePreview = require('../../utils/imagePreview');
 
 // Create new post Route
 router.post("/new", withAuth, (req, res) => {
@@ -48,9 +47,6 @@ router.get("/:id", (req, res) => {
     ],
   })
     .then(async (dbPostData) => {
-      dbPostData.image_url = await imagePreview(
-        dbPostData.post_url
-      );
       res.json(dbPostData);
     })
     .catch((err) => {

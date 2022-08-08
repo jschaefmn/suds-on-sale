@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
+const { getLinkPreview } = require("link-preview-js");
 
 // create our Post model
 class Post extends Model {
@@ -57,6 +58,10 @@ Post.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -80,6 +85,20 @@ Post.init(
     },
   },
   {
+    hooks: {
+      async beforeCreate(newPostData) {
+        const image_url = await getLinkPreview(newPostData.post_url, {
+          imagesPropertyType: "og",
+          headers: {
+            "user-agent": "googlebot",
+          },
+        });
+        
+        newPostData.image_url = image_url.images[0];
+
+        return newPostData;
+      },
+    },
     sequelize,
     freezeTableName: true,
     underscored: true,
