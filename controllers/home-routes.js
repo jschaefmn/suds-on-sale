@@ -3,6 +3,15 @@ const sequelize = require("../config/connection");
 const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
+router.get('/login', (req, res) => {
+  if (req.session.loggenIn) {
+    res.redirect('/');
+    return
+  }
+
+  res.render('login');
+});
+
 // Beer Category Route
 router.get("/beer", (req, res) => {
   // The Model table 'Post' and sequelize method 'findall()'
@@ -168,13 +177,7 @@ router.get("/:id", (req, res) => {
 });
 
 // if user access login page and they are already logged in, redirect to home page, else display login.
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('login');
-});
+
 
 router.get("/create", (req, res) => {
   if (req.session.loggedIn) {
