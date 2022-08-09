@@ -168,12 +168,12 @@ router.get("/:id", (req, res) => {
 });
 
 // if user access login page and they are already logged in, redirect to home page, else display login.
-router.get("/login", (req, res) => {
+router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/");
+    res.redirect('/');
     return;
   }
-  res.render("login");
+  res.render('login');
 });
 
 router.get("/create", (req, res) => {
