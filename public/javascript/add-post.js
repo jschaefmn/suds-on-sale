@@ -1,9 +1,12 @@
-async function newFormHandler(event) {
+//  new post form
+async function newPostForm(event) {
     event.preventDefault();
 
+    // get post and post text
     const postTitle = document.querySelector('input[name="postTitle"]').value;
     const postContent = document.querySelector('textarea[name="postContent"]').value.trim();
 
+    // add new post w/ POST route
     const response = await fetch (`/api/posts`, {
         method:'POST',
         body: JSON.stringify({
@@ -14,7 +17,7 @@ async function newFormHandler(event) {
             'content-type': 'application/json'
         }
     });
-
+    // if post meets requirements, reload page with the updated post
     if (response.ok) {
         document.location.replace('/');
     } else {
@@ -22,4 +25,5 @@ async function newFormHandler(event) {
     }
 }
 
-document.querySelector('.new-post-form').addEventListener('submit', newFormHandler);
+    // event listener for new post submit button
+document.querySelector('.new-post-form').addEventListener('submit', newPostForm);
