@@ -57,6 +57,118 @@ const upvotedata = [
     user_id: 9,
     post_id: 10,
   },
+  {
+    user_id: 1,
+    post_id: 11,
+  },
+  {
+    user_id: 2,
+    post_id: 11,
+  },
+  {
+    user_id: 3,
+    post_id: 11,
+  },
+  {
+    user_id: 4,
+    post_id: 11,
+  },
+  {
+    user_id: 1,
+    post_id: 12,
+  },
+  {
+    user_id: 4,
+    post_id: 12,
+  },
+  {
+    user_id: 1,
+    post_id: 13,
+  },
+  {
+    user_id: 8,
+    post_id: 13,
+  },
+  {
+    user_id: 10,
+    post_id: 13,
+  },
+  {
+    user_id: 1,
+    post_id: 18,
+  },
+  {
+    user_id: 5,
+    post_id: 15,
+  },
+  {
+    user_id: 6,
+    post_id: 15,
+  },
+  {
+    user_id: 4,
+    post_id: 14,
+  },
+  {
+    user_id: 9,
+    post_id: 20,
+  },
+  {
+    user_id: 1,
+    post_id: 6,
+  },
+  {
+    user_id: 2,
+    post_id: 6,
+  },
+  {
+    user_id: 3,
+    post_id: 6,
+  },
+  {
+    user_id: 4,
+    post_id: 6,
+  },
+  {
+    user_id: 5,
+    post_id: 6,
+  },
+  {
+    user_id: 4,
+    post_id: 7,
+  },
+  {
+    user_id: 1,
+    post_id: 7,
+  },
+  {
+    user_id: 8,
+    post_id: 17,
+  },
+  {
+    user_id: 10,
+    post_id: 17,
+  },
+  {
+    user_id: 1,
+    post_id: 16,
+  },
+  {
+    user_id: 5,
+    post_id: 17,
+  },
+  {
+    user_id: 6,
+    post_id: 6,
+  },
+  {
+    user_id: 4,
+    post_id: 19,
+  },
+  {
+    user_id: 9,
+    post_id: 19,
+  },
 ];
 
 const seedUpvotes = () => Upvote.bulkCreate(upvotedata);
