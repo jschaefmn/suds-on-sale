@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,37 +10,40 @@
     <link rel="stylesheet" href="">
 
 </head>
+
+
 <body>
     <div class="wrap">
         <header>
-            <h1>
-                {{!-- home button --}}
-                <a href="/">Home</a>
-            </h1>
+            <div class="site">
+                <div class="site-name">
+                    <a href="/">Suds On Sale</a>
+                </div>
+            </div>
             <nav>
+                {{#if loggedIn}}
+                <a href="/dashboard">Dashboard</a>
+                <button id="logout" class="btn">Logout</button>
+                {{else}}
+                <a href="login">Login</a>
+                {{/if}}
+
                 {{!-- navigation list --}}
                 <a href="/beer">Beer</a>
                 <a href="/wine">Wine</a>
                 <a href="/spirits">Spirits</a>
-                {{#if loggedOut}}
-                <a href="/login">Login</a>
-                {{else}}
-                <button id="logout" class="btn-no-style logout">Log Out</button>
-                {{/if}}
-                
+
+
             </nav>
         </header>
-        <div class="site">
-            <div class="site-name">
-               <h1> Suds On Sale</h1>
-            </div>
-        </div>
-      <main>
-          {{{ body }}}
-      </main>
+        <main>
+            {{{ body }}}
+        </main>
+
     </div>
     {{#if loggedIn}}
     <script src="/public/javascript/logout.js"></script>
     {{/if}}
 </body>
+
 </html>

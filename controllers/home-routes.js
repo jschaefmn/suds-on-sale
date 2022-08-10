@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const {
-  User,
-  Post,
-  Comment,
-} = require("../models");
+const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
-const imagePreview = require("../utils/imagePreview");
+
+router.get('/login', (req, res) => {
+  if (req.session.loggenIn) {
+    res.redirect('/');
+    return
+  }
+
+  res.render('login');
+});
 
 // Beer Category Route
 router.get("/beer", (req, res) => {
@@ -22,6 +26,7 @@ router.get("/beer", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -30,14 +35,9 @@ router.get("/beer", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-
-      res.json(dbPostData);
+    .then((dbPostData) => {
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('beer', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -59,6 +59,7 @@ router.get("/wine", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -67,14 +68,9 @@ router.get("/wine", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-
-      res.json(dbPostData);
+    .then((dbPostData) => {
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('wine', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -96,6 +92,7 @@ router.get("/spirits", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -104,14 +101,9 @@ router.get("/spirits", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-
-      res.json(dbPostData);
+    .then((dbPostData) => {
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('spirits', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -130,6 +122,7 @@ router.get("/", (req, res) => {
       "post_body",
       "created_at",
       "post_url",
+      "image_url",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -146,18 +139,12 @@ router.get("/", (req, res) => {
       ],
     ],
   })
-    .then(async (dbPostData) => {
+    .then((dbPostData) => {
       if (dbPostData.length > 10) {
         dbPostData.length = 10;
       }
-
-      for (let index = 0; index < dbPostData.length; index++) {
-        dbPostData[index].image_url = await imagePreview(
-          dbPostData[index].post_url
-        );
-      }
-      
-      res.json(dbPostData);
+      const posts = dbPostData.map(post => post.get({ plain: true }));
+      res.render('homepage', { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -171,7 +158,7 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
+    attributes: ["title", "price", "post_body", "created_at", "post_url", "image_url"],
     include: [
       {
         model: Comment,
@@ -191,13 +178,7 @@ router.get("/:id", (req, res) => {
 });
 
 // if user access login page and they are already logged in, redirect to home page, else display login.
-router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  res.render("login");
-});
+
 
 router.get("/create", (req, res) => {
   if (req.session.loggedIn) {
