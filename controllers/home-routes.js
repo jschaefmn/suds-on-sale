@@ -4,18 +4,9 @@ const {
   User,
   Post,
   Comment,
-<<<<<<< HEAD
-  Category,
-  Tag,
-  Upvote,
-  Downvote,
-} = require("../models");
-const withAuth = require("../utils/auth");
-=======
 } = require("../models");
 const withAuth = require("../utils/auth");
 const imagePreview = require("../utils/imagePreview");
->>>>>>> origin
 
 // Beer Category Route
 router.get("/beer", (req, res) => {
@@ -25,18 +16,6 @@ router.get("/beer", (req, res) => {
     where: {
       category_id: 1,
     },
-<<<<<<< HEAD
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
-    ],
-  })
-    .then((dbPostData) => res.json(dbPostData))
-=======
     attributes: [
       "title",
       "price",
@@ -60,7 +39,6 @@ router.get("/beer", (req, res) => {
 
       res.json(dbPostData);
     })
->>>>>>> origin
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -75,18 +53,6 @@ router.get("/wine", (req, res) => {
     where: {
       category_id: 2,
     },
-<<<<<<< HEAD
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
-    ],
-  })
-    .then((dbPostData) => res.json(dbPostData))
-=======
     attributes: [
       "title",
       "price",
@@ -110,7 +76,6 @@ router.get("/wine", (req, res) => {
 
       res.json(dbPostData);
     })
->>>>>>> origin
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -125,18 +90,6 @@ router.get("/spirits", (req, res) => {
     where: {
       category_id: 3,
     },
-<<<<<<< HEAD
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes and downvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
-    ],
-  })
-    .then((dbPostData) => res.json(dbPostData))
-=======
     attributes: [
       "title",
       "price",
@@ -160,7 +113,6 @@ router.get("/spirits", (req, res) => {
 
       res.json(dbPostData);
     })
->>>>>>> origin
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -172,20 +124,6 @@ router.get("/", (req, res) => {
   // The Model table 'Post' and sequelize method 'findall()'
   Post.findAll({
     // to filter so only some columns are returned you can utilize 'attributes' in sequelize
-<<<<<<< HEAD
-    attributes: ["title", "price", "post_body", "created_at", "post_url"],
-    //Need to include the upvotes tally
-    include: [
-      {
-        model: Upvote,
-        attributes: ["id", "user_id", "post_id"],
-      },
-    ],
-  })
-    .then((dbPostData) => {
-      res.render('test');
-      // res.json(dbPostData);
-=======
     attributes: [
       "title",
       "price",
@@ -220,7 +158,6 @@ router.get("/", (req, res) => {
       }
       
       res.json(dbPostData);
->>>>>>> origin
     })
     .catch((err) => {
       console.log(err);
@@ -262,11 +199,6 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-<<<<<<< HEAD
-  res.render("login");
-});
-
-=======
 router.get("/create", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -276,5 +208,4 @@ router.get("/create", (req, res) => {
 });
 
 
->>>>>>> origin
 module.exports = router;
