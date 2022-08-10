@@ -1,4 +1,4 @@
-const helpers = {
+module.exports = {
     // retrieving the month, day, and year from a date being passed in
   format_date: (date) => {
     return `${new Date(date).getMonth() + 1}/${new Date(
@@ -14,7 +14,14 @@ const helpers = {
       .split("/")[0]
       .split("?")[0];
   },
-};
+  format_plural: (word, amount) => {
+    if (amount !== 1) {
+      return `${word}s`;
+    }
+    
+    return word;
+  }
+}
 
-module.exports = helpers;
+
 
