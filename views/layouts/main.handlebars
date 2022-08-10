@@ -11,6 +11,7 @@
 
 </head>
 
+
 <body>
     <div class="wrap">
         <header>
@@ -26,16 +27,19 @@
                 {{else}}
                 <a href="login">Login</a>
                 {{/if}}
+
                 {{!-- navigation list --}}
                 <a href="/beer">Beer</a>
                 <a href="/wine">Wine</a>
                 <a href="/spirits">Spirits</a>
+
 
             </nav>
         </header>
         <main>
             {{{ body }}}
         </main>
+
     </div>
     {{#if loggedIn}}
     <script src="/public/javascript/logout.js"></script>
