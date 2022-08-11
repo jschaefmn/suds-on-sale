@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 60px;
+  font-style: italic;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+nav {
+  display: block;
+  text-align: right;
+  margin-right: 15px;
+  margin-bottom: 40px;
+  font-size: 25px;
+}
+
+nav section {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  margin-left: 10px;
+  justify-content: space-around;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+main img {
+  padding: 30px;
+  max-width: 200px;
+
+}
+
+main h1 {
+  margin-bottom: 25px;
+}
+
+.login-form {
+  margin: 5px;
+}
+
+.login-form input {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.login-form label {
+  font-size: larger;
+}
+
+.signup-form {
+  padding: 5px;
+}
+
+.signup-form label {
+  margin: 5px;
+  font-size: larger;
+}
+
+.signup-form input {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(195, 170, 25);
+}
+
+button {
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 25px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+
+.post {
+  margin-left: 50px; 
+  justify-content: flex-end;
+}
+
+.post a {
+  font-size: larger; 
+}
+
+.comment {
+  margin-left: 50px; 
+  margin-top: 10px; 
+  max-width: 500px; 
+  border-top: 2px solid rgb(113, 109, 109); 
+  padding: 10px; 
+}
+
+.meta {
+  margin-bottom: 5px; 
+  font-weight: 900;
+}

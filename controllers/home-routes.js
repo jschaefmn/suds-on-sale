@@ -3,13 +3,13 @@ const sequelize = require("../config/connection");
 const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
-router.get('/login', (req, res) => {
+router.get("/login", (req, res) => {
   if (req.session.loggenIn) {
-    res.redirect('/');
-    return
+    res.redirect("/");
+    return;
   }
 
-  res.render('login');
+  res.render("login");
 });
 
 // Beer Category Route
@@ -27,6 +27,7 @@ router.get("/beer", (req, res) => {
       "created_at",
       "post_url",
       "image_url",
+      "id",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -36,8 +37,8 @@ router.get("/beer", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('beer', { posts });
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("beer", { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -60,6 +61,7 @@ router.get("/wine", (req, res) => {
       "created_at",
       "post_url",
       "image_url",
+      "id",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -69,8 +71,8 @@ router.get("/wine", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('wine', { posts });
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("wine", { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -93,6 +95,7 @@ router.get("/spirits", (req, res) => {
       "created_at",
       "post_url",
       "image_url",
+      "id",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -102,8 +105,8 @@ router.get("/spirits", (req, res) => {
     ],
   })
     .then((dbPostData) => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('spirits', { posts });
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("spirits", { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -123,6 +126,7 @@ router.get("/", (req, res) => {
       "created_at",
       "post_url",
       "image_url",
+      "id",
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM upvote WHERE upvote.post_id=post.id)"
@@ -143,8 +147,8 @@ router.get("/", (req, res) => {
       if (dbPostData.length > 10) {
         dbPostData.length = 10;
       }
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('homepage', { posts });
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("homepage", { posts });
     })
     .catch((err) => {
       console.log(err);
@@ -153,12 +157,20 @@ router.get("/", (req, res) => {
 });
 
 // Route to view a single post that includes the comments
-router.get("/:id", (req, res) => {
+router.get("/post/:id", (req, res) => {
   Post.findOne({
     where: {
       id: req.params.id,
     },
-    attributes: ["title", "price", "post_body", "created_at", "post_url", "image_url"],
+    attributes: [
+      "title",
+      "price",
+      "post_body",
+      "created_at",
+      "post_url",
+      "image_url",
+      "id",
+    ],
     include: [
       {
         model: Comment,
@@ -170,7 +182,10 @@ router.get("/:id", (req, res) => {
       },
     ],
   })
-    .then((dbPostData) => res.json(dbPostData))
+    .then((dbPostData) => {
+      const post = dbPostData.get({ plain: true });
+      res.render("single-post", { post });
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -179,7 +194,6 @@ router.get("/:id", (req, res) => {
 
 // if user access login page and they are already logged in, redirect to home page, else display login.
 
-
 router.get("/create", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -187,6 +201,5 @@ router.get("/create", (req, res) => {
   }
   res.render("create");
 });
-
 
 module.exports = router;

@@ -7,35 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SudsOnSale</title>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://kit.fontawesome.com/230a732877.js" crossorigin="anonymous"></script>
 
 </head>
 
-<body>
-    <div class="wrap">
-        <header>
-            <div class="site">
-                <div class="site-name">
-                    <a href="/">Suds On Sale</a>
-                </div>
-            </div>
-            <nav>
-                {{#if loggedIn}}
-                <a href="/dashboard">Dashboard</a>
-                <button id="logout" class="btn">Logout</button>
-                {{else}}
-                <a href="login">Login</a>
-                {{/if}}
-                {{!-- navigation list --}}
-                <a href="/beer">Beer</a>
-                <a href="/wine">Wine</a>
-                <a href="/spirits">Spirits</a>
 
-            </nav>
-        </header>
+<body>
+    <header>
+        <div class="site">
+            <div class="site-name">
+                <p><span><b>S</b>uds On <span><b>$</b>ale <span><i class="fa-solid fa-champagne-glasses"></i></span></p>
+            </div>
+        </div>
+    </header>
+    <nav>
+        {{#if loggedIn}}
+        <a href="/dashboard">Dashboard</a>
+        <button id="logout" class="btn">Logout</button>
+        {{else}}
+        <a href="login">Login</a>
+        {{/if}}
+        <section>
+            {{!-- navigation list --}}
+            <a href="/beer">Beer</a>
+            <a href="/wine">Wine</a>
+            <a href="/spirits">Spirits</a>
+        </section>
+    </nav>
+    <div class="wrap">
         <main>
             {{{ body }}}
         </main>
+
     </div>
     {{#if loggedIn}}
     <script src="/public/javascript/logout.js"></script>
