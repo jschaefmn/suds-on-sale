@@ -16,7 +16,7 @@ router.post("/new", withAuth, (req, res) => {
     title: req.body.title,
     post_url: req.body.post_url,
     post_body: req.body.post_body,
-    user_id: req.body.user_id,
+    user_id: req.session.user_id,
     price: req.body.price,
     category_id: req.body.category_id,
     tag_id: req.body.tag_id,
